@@ -9,9 +9,10 @@ exports.createOrder = async (req, res) => {
     return res.status(400).send('Invalid menu item.');
   }
 
-  const order = await Order.createOrder(item.id, item.price);
+  const order = await Order.createOrder(item.id, item.price, req.session.user.id);
   res.redirect(`/orders/${order.id}`);
 };
+
 exports.getOrder = async (req, res) => {
   const order = await Order.getOrderById(req.params.id);
   if (!order) {
