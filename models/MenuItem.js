@@ -7,3 +7,10 @@ exports.getMenuByRestaurant = (restaurantId) => {
 exports.getMenuItemById = (id) => {
   return db.oneOrNone('SELECT * FROM menu_items WHERE id = $1', [id]);
 };
+
+exports.createMenuItem = ({ restaurantId, name, price }) => {
+  return db.one(
+    'Insert INTO menu_items (restaurantId, name, price) VALUES ($1, $2, $3) RETURNING *',
+    [restaurantId, name, price]
+  );
+};
